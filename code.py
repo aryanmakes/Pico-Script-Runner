@@ -1,4 +1,5 @@
-# Tech Notebok
+# Tech Notebook
+# youtube.com/technotebook
 import time
 import os
 import usb_hid
