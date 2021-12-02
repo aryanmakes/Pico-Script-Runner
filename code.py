@@ -9,7 +9,7 @@ from adafruit_hid.keyboard_layout_us import KeyboardLayoutUS
 
 time.sleep(3)
 
-if not 'network.txt' in os.listdir():
+if 'network.txt' not in os.listdir():
     time.sleep(1.5)
     keyboard = Keyboard(usb_hid.devices)
     layout = KeyboardLayoutUS(keyboard)
